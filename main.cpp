@@ -12,6 +12,7 @@ int k, l; // k - строки, l - столбцы
 char** matrixOne;  // n строк в массиве
 char** matrixTwo;  // k строк в массиве
 char** multTripMatrixArr;
+//0иепшиьпеьаител
 
 void setcolor(WORD color);  // Изменение цвета текста
 
