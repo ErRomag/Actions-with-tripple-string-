@@ -7,6 +7,7 @@ using namespace std;
 
 int n, m; // n - строки, m - столбцы
 int k, l; // k - строки, l - столбцы
+int primer;
 char** matrixOne;  // n строк в массиве
 char** matrixTwo;  // k строк в массиве
 
