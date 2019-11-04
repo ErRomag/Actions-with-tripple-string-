@@ -4,6 +4,7 @@
 #include <windows.h>
 
 #include <vector>
+#include <map>
 
 using namespace std;
 
@@ -12,7 +13,6 @@ int k, l; // k - строки, l - столбцы
 char** matrixOne;  // n строк в массиве
 char** matrixTwo;  // k строк в массиве
 char** multTripMatrixArr;
-// потиприрптоитпот
 
 void setcolor(WORD color);  // Изменение цвета текста
 
@@ -67,8 +67,8 @@ int main()
         }
         else if (numberOperation == 3) {
             cout << "\nРезультат логического отрицания ПЕРВОГО троичного вектора:" << endl;
-            negationTrippleMatrix();
-            //newNegationTrippleMatrix();
+            //negationTrippleMatrix();
+            newNegationTrippleMatrix();
             cout << "-----------------------------------------------------------" << endl;
         }
         else if (numberOperation == 4) {
@@ -429,135 +429,66 @@ char** newMultiplicationTrippleMatrix(char** matrixOne, char** matrixTwo) // Умн
         }
     }
 
+    printMatrix(multTripMatrixArr, multString, m);
+    //destroyMatrix(multTripMatrixArr, multString);
+
     return multTripMatrixArr;
 
-
-    printMatrix(multTripMatrixArr, multString, m);
-    destroyMatrix(multTripMatrixArr, multString);
 }
 
-void newNegationTrippleMatrix() {
+void newNegationTrippleMatrix()
+{
 
-  //  int countDash = 0;  // Счетчик дефисов
-    //int numberString = n;  // Количество строк в новой матрице (-1 так как элементы массива начинаются с 0)
+    map <int, char**> trippleMap;
+    char** negationTripMatrixArr;
     int stringCount = 0;
 
-    // Считаем количество дефисов в строке
-//    for (int i = 0; i < n; i++) {
-//        for (int j = 0; j < m; j++) {
-//            if (matrixOne[i][j] == '-') {
-//                countDash++;
-//            }
-//        }
-//    }
 
-    // Выбираем количество строк в зависимости от количества символов '-'
-//    if (countDash == 0) {
-//        numberString = m;
-//    } else {
-//        numberString = m - countDash;
-//    }
+    for (int i = 0; i < n; i++) {
 
-    size_t  numberString = m;
-    size_t  numberColumns = n;
-
-   std::vector<std::vector<char>> negationTripVector(m);  // Создаем вектор размерности n для матриц
-   // vector< vector<char**> > negationTripVector(n, vector<char**>(m));
-
-    //char** negationTripVector[n];
-
-//    for (int i = 0; i < n; i++) {
-//        // Создание новой матрицы для результатов отрицания
-//        char** negationTripMatrixArr = new char*[n];
-//        for (int i = 0; i < n; i++) {// строки
-//            negationTripMatrixArr[i] = new char[m];  // столбцы создаем m ячеек для i строки
-//            }
-
-//        negationTripVector[i] = negationTripMatrixArr;
-//    }
+        // Создание новой матрицы для результатов отрицания
+        char** negationTripMatrixArr = new char*[n];
+        for (int i = 0; i < n; i++) // строки
+            negationTripMatrixArr[i] = new char[m];  // столбцы создаем m ячеек для i строки
 
 
+        for (int j = 0; j < m; j++) {
+            if (matrixOne[i][j] == '1') {
 
-   for (size_t a = 0; a < numberString; a++) {
-       for ( size_t i = 0; i < numberString;i++) {
-           negationTripVector[i].resize(numberColumns);
-           for (size_t j = 0; j < numberColumns; j++) {
-               if (matrixOne[a][j] == '1') {
-                   for (int j= 0; j < m; j++) {
-                       negationTripVector[i][j]='-';
-                   }
-                   negationTripVector[i][j] = '0';
-                   a++; // Переходим на новую строку
-               }
-               else if (matrixOne[a][j] == '0') {
-                   for (int j = 0; j < m; j++) {
-                       negationTripVector[i][j] = '-';
-                   }
-                   negationTripVector[i][j] = '1';
-                   a++;
-               }
-               else if (matrixOne[a][j] == '-') {
-               }
-           }
-       }
-   }
+                for (int j= 0; j < m; j++) {
+                    negationTripMatrixArr[stringCount][j] = '-';
+                }
+                negationTripMatrixArr[stringCount][j] = '0';
+                stringCount++; // Переходим на новую строку
+            }
+            else if (matrixOne[i][j] == '0') {
+                for (int j = 0; j < m; j++) {
+                    negationTripMatrixArr[stringCount][j] = '-';
+                }
+                negationTripMatrixArr[stringCount][j] = '1';
+                stringCount++;
+            }
+            else if (matrixOne[i][j] == '-') {
+            }
+        }
+        stringCount = 0;
+        trippleMap.insert( pair<int,char** >(i,negationTripMatrixArr) );
+    }
 
+    //    for (auto it = trippleMap.begin(); it != trippleMap.end(); ++it)
+    //    {
+    //        cout << (*it).first << " : " << (*it).second << endl;
+    //    }
 
+    if (n == 1) {
+        printMatrix(trippleMap[0], n, m);
+    }
+    else {
+        newMultiplicationTrippleMatrix(trippleMap[0], trippleMap[1]);
+    }
 
-   // Вывод полученной троичной матрицы сложения
-   for (int i = 0; i < numberString; i++){
-       cout << "|";
-       for ( int j = 0; j < numberColumns; j++){
-           cout << " " << negationTripVector[i][j] << " ";
-       }
-       cout << "|";
-       cout << endl;
-   }
-
-   int mult = 0;
-   int arr[4] = {1 , 2, 3, 4};
-
-   for (int i = 0; i < 3; i++){
-       mult *=arr[i];
-   }
-
-
-
-
-
-
-    // -----------------------------------
-
-//    const size_t row = 5;
-//        const size_t col = 3;
-//        std::vector<std::vector<int> > imatrix(row);
-//        // Заполнение
-//        for(size_t i = 0; i < row; ++i)
-//        {
-//            imatrix[i].resize(col);
-//            for(size_t j = 0; j < col; ++j)
-//                imatrix[i][j] = rand() % 666;
-//        }
-//        // Печать
-//        std::for_each(imatrix.begin(), imatrix.end(), [](std::vector<int>& ivec)
-//        {
-//            std::for_each(ivec.begin(), ivec.end(), [](int i)
-//            {
-//                std::cout << std::left << std::setw(5) << i;
-//            });
-//            std::cout << std::endl;
-//        });
-//        system("pause");
-//        return 0;
-    // ----------------------------------
-
-
-
-//    for (int vectorCount = 0; vectorCount < n; vectorCount++) { // Идем по строке вектора
-
-
-//    printMatrix(negationTripMatrixArr, stringCount, m);
-//    destroyMatrix(negationTripMatrixArr, stringCount);
+    trippleMap.clear();
+    //printMatrix(multTripMatrixArr, n, m);
 }
 
 
